@@ -1,0 +1,5 @@
+---
+# defaults file for hostname
+
+# Set this variable to true to set root's gecos field comment to root@hostname
+hostname_root_gecos_field: false
