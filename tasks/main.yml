@@ -12,7 +12,9 @@
   user:
     name: root
     comment: "root@{{ inventory_hostname_short }}"
-  when: hostname_root_gecos_field
+  when:
+    - hostname_root_gecos_field is defined
+    - hostname_root_gecos_field
   tags:
     - hostname
     - gecos
@@ -22,10 +24,13 @@
   lineinfile:
     dest: /etc/hosts
     regexp: '^[#\s]*127.0.1.1.*$'
-    line: '127.0.1.1	{{ ansible_fqdn }} {{ ansible_nodename }}'
-    insertafter: '127.0.0.1	localhost'
+    line: '127.0.1.1 {{ ansible_fqdn }} {{ ansible_nodename }}'
+    insertafter: '127.0.0.1\s+localhost'
     backup: yes
-  when: not ansible_virtualization_type | lower() in ["lxc","virtualpc"]
+  when:
+    - hostname_lo_fqdn is defined
+    - hostname_lo_fqdn
+    - not ansible_virtualization_type | lower() in ["lxc","virtualpc"]
   tags:
     - hostname
     - hosts

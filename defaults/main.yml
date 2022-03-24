@@ -1,5 +1,12 @@
 ---
 # defaults file for hostname
 
+# Set this variable to true to use a loopback fqdn address.
+# This adds a line in /etc/hosts with :
+# 127.0.1.1 myhost.mydomain.net myhost
+# default is false
+# hostname_lo_fqdn: false
+
 # Set this variable to true to set root's gecos field comment to root@hostname
-hostname_root_gecos_field: false
+# default is false
+# hostname_root_gecos_field: false
