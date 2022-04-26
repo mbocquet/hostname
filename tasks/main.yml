@@ -26,7 +26,7 @@
     regexp: '^[#\s]*127.0.1.1.*$'
     line: '127.0.1.1 {{ ansible_fqdn }} {{ ansible_nodename }}'
     insertafter: '127.0.0.1\s+localhost'
-    backup: yes
+    backup: true
   when:
     - hostname_lo_fqdn is defined
     - hostname_lo_fqdn
