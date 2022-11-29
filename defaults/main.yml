@@ -10,3 +10,6 @@
 # Set this variable to true to set root's gecos field comment to root@hostname
 # default is false
 # hostname_root_gecos_field: false
+
+# Set this variable to fill default domain
+# ansible_domain: mydomain.net

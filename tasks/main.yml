@@ -12,11 +12,14 @@
     - name: /etc/hosts
       ansible.builtin.lineinfile:
         dest: /etc/hosts
-        regexp: '^[#\s]*127.0.1.1.*$'
+        regexp: '^[#\s]*127.0.1.1(\s+).*$'
         line:
-          '127.0.1.1 {{ ansible_nodename }}.{{ ansible_domain }}
+          '127.0.1.1\1{{ ansible_nodename }}.{% if ansible_domain |
+          length > 0 %}{{ ansible_domain }}{% else %}{{ domain_name }}
+          {% endif %}
           {{ ansible_nodename }}'
         insertafter: '127.0.0.1\s+localhost'
+        backrefs: true
         backup: true
       when:
         - hostname_lo_fqdn is defined
