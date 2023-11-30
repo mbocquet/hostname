@@ -1,6 +1,6 @@
 'hostname'. Ansible role to configure hostname.
 
-Copyright © 2018-2021 Mathias Bocquet (mbocquet@sekoya.org)
+Copyright © 2018-2023 Mathias Bocquet (mbocquet@sekoya.org)
 
 This file is part of 'hostname' Ansible role.
 
