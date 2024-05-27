@@ -1,13 +1,13 @@
 ---
 # tasks file for hostname
-
 - name: host name
+  when: not ansible_virtualization_type | lower() in [ "lxc", "virtualpc" ]
+  tags:
+    - hostname
   block:
     - name: hostname
       ansible.builtin.hostname:
         name: "{{ inventory_hostname_short }}"
-      tags:
-        - hostname
 
     - name: /etc/hosts
       ansible.builtin.lineinfile:
@@ -15,7 +15,7 @@
         regexp: '^[#\s]*127.0.1.1(\s+).*$'
         line:
           '127.0.1.1\1{{ ansible_nodename }}.{% if ansible_domain |
-          length > 0 %}{{ ansible_domain }}{% else %}{{ domain_name }}
+          length > 0 %}{{ ansible_domain }}{% else %}{{ ansible_dns.domain }}
           {% endif %}
           {{ ansible_nodename }}'
         insertafter: '127.0.0.1\s+localhost'
@@ -25,10 +25,7 @@
         - hostname_lo_fqdn is defined
         - hostname_lo_fqdn
       tags:
-        - hostname
         - hosts
-
-  when: not ansible_virtualization_type | lower() in [ "lxc", "virtualpc" ]
 
 - name: root gecos field
   ansible.builtin.user:
@@ -38,6 +35,5 @@
     - hostname_root_gecos_field is defined
     - hostname_root_gecos_field
   tags:
-    - hostname
     - gecos
     - user
