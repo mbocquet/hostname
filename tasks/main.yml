@@ -14,7 +14,11 @@
         dest: /etc/hosts
         regexp: ^[#\s]*127.0.1.1(\s+).*$
         line:
-          127.0.1.1\g<1>{% if ansible_domain is defined and ansible_domain | length > 0 %}{{ ansible_nodename }}.{{ ansible_domain }} {% elif ansible_dns['domain'] is defined and ansible_dns['domain'] | length > 0 %}{{ ansible_nodename }}.{{ ansible_dns['domain'] }} {% endif %}{{ ansible_nodename }}
+          127.0.1.1\g<1>{% if ansible_domain is defined and ansible_domain |
+          length > 0 %}{{ ansible_nodename }}.{{ ansible_domain }} {% elif
+          ansible_dns['domain'] is defined and ansible_dns['domain'] |
+          length > 0 %}{{ ansible_nodename }}.{{ ansible_dns['domain'] }} {%
+          endif %}{{ ansible_nodename }}
         insertafter: 127.0.0.1\s+localhost
         backrefs: true
         backup: true
