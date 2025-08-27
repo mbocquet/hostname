@@ -5,7 +5,7 @@
     - hostname
   when: not ansible_virtualization_type | lower() in [ "lxc", "virtualpc" ]
   block:
-    - name: hostname
+    - name: Hostname
       ansible.builtin.hostname:
         name: "{{ inventory_hostname_short }}"
 
