@@ -9,7 +9,7 @@
       ansible.builtin.hostname:
         name: "{{ inventory_hostname_short }}"
 
-    - name: /etc/hosts
+    - name: Line in /etc/hosts
       ansible.builtin.lineinfile:
         dest: /etc/hosts
         regexp: ^[#\s]*127.0.1.1(\s+).*$
@@ -24,7 +24,7 @@
         backup: true
       when:
         - hostname_lo_fqdn is defined
-        - hostname_lo_fqdn
+        - hostname_lo_fqdn is true
       tags:
         - hosts
 
