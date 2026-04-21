@@ -3,7 +3,7 @@
 - name: Host name
   tags:
     - hostname
-  when: not ansible_virtualization_type | lower() in [ "lxc", "virtualpc" ]
+  when: not ansible_facts["virtualization_type"] | lower() in [ "lxc", "virtualpc" ]
   block:
     - name: Hostname
       ansible.builtin.hostname:
@@ -14,11 +14,11 @@
         dest: /etc/hosts
         regexp: ^[#\s]*127.0.1.1(\s+).*$
         line:
-          127.0.1.1\g<1>{% if ansible_domain is defined and ansible_domain |
-          length > 0 %}{{ ansible_nodename }}.{{ ansible_domain }} {% elif
-          ansible_dns['domain'] is defined and ansible_dns['domain'] |
-          length > 0 %}{{ ansible_nodename }}.{{ ansible_dns['domain'] }} {%
-          endif %}{{ ansible_nodename }}
+          127.0.1.1\g<1>{% if ansible_facts["domain"] is defined and ansible_facts["domain"] |
+          length > 0 %}{{ ansible_facts["nodename"] }}.{{ ansible_facts["domain"] }} {% elif
+          ansible_facts["dns"]['domain'] is defined and ansible_facts["dns"]['domain'] |
+          length > 0 %}{{ ansible_facts["nodename"] }}.{{ ansible_facts["dns"]['domain'] }} {%
+          endif %}{{ ansible_facts["nodename"] }}
         insertafter: 127.0.0.1\s+localhost
         backrefs: true
         backup: true
